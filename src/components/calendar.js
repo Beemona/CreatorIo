@@ -5,6 +5,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { DigitalClock } from '@mui/x-date-pickers/DigitalClock';
+import {
+  TextField,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  FormControl,
+  FormLabel,
+  FormGroup,
+  Checkbox,
+  Button,
+} from '@mui/material';
 import './calendar.css'; // Import your custom CSS file for styles
 
 dayjs.extend(updateLocale);
@@ -57,7 +68,6 @@ const shouldDisableTime = (value, view, selectedDate) => {
   return false;
 };
 
-
 export default function BasicDateCalendar() {
   const [selectedDate, setSelectedDate] = React.useState(null);
   const [allHoursBooked, setAllHoursBooked] = React.useState(false);
@@ -106,33 +116,102 @@ export default function BasicDateCalendar() {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-        <div style={{ width: '300px', marginRight: '20px' }}>
-          <DateCalendar 
-            defaultValue={dayjs()}
-            shouldDisableDate={shouldDisableDate} 
-            disablePast={true}
-            onChange={handleDateChange}
-          />
-        </div>
-        {selectedDate && (
-          <div style={{ flex: '1', minWidth: '300px' }}>
-            {areHoursAvailable(selectedDate) ? (
-              <DigitalClock
-                skipDisabled={true}
-                timeStep={60}
-                shouldDisableTime={(value, view) => shouldDisableTime(value, view, selectedDate)}
-                ampm={false}
-                style={{ width: '100%' }}
-              />
-            ) : (
-              <div style={{ color: '#e91e63', marginTop: '10px' }}>No hours available</div>
-            )}
-            {allHoursBooked && (
-               <div style={{ color: '#e91e63', marginTop: '10px' }}>No hours available</div>
-            )}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+          <div style={{ width: '300px', marginRight: '20px' }}>
+            <DateCalendar 
+              defaultValue={dayjs()}
+              shouldDisableDate={shouldDisableDate} 
+              disablePast={true}
+              onChange={handleDateChange}
+            />
           </div>
-        )}
+          {selectedDate && (
+            <div style={{ flex: '1', minWidth: '300px' }}>
+              {areHoursAvailable(selectedDate) ? (
+                <DigitalClock
+                  skipDisabled={true}
+                  timeStep={60}
+                  shouldDisableTime={(value, view) => shouldDisableTime(value, view, selectedDate)}
+                  ampm={false}
+                  style={{ width: '100%' }}
+                />
+              ) : (
+                <div style={{ color: '#e91e63', marginTop: '10px' }}>No hours available</div>
+              )}
+              {allHoursBooked && (
+                <div style={{ color: '#e91e63', marginTop: '10px' }}>No hours available</div>
+              )}
+            </div>
+          )}
+        </div>
+        
+        {/* Form Section */}
+        <div style={{ marginTop: '20px', width: '100%', maxWidth: '600px', backgroundColor: '#FFE0B5', padding: '20px', borderRadius: '8px' }}>
+      <form noValidate autoComplete="off">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {/* Input Fields */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+            <div style={{ flex: '1 1 calc(50% - 16px)' }}>
+              <TextField label="Nume și prenume" variant="outlined" fullWidth required color='calendar'/>
+            </div>
+            <div style={{ flex: '1 1 calc(50% - 16px)' }}>
+              <TextField label="Email" variant="outlined" fullWidth required color='calendar'/>
+            </div>
+            <div style={{ flex: '1 1 calc(50% - 16px)' }}>
+              <TextField label="Telefon" variant="outlined" fullWidth required color='calendar'/>
+            </div>
+            <div style={{ flex: '1 1 calc(50% - 16px)' }}>
+              <TextField label="Alte cerințe" variant="outlined" fullWidth color='calendar'/>
+            </div>
+          </div>
+
+          {/* Form Controls Row */}
+          <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '16px' }}>
+            {/* Coaching Type */}
+            <div style={{ flex: '1 1 calc(25% - 16px)' }}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Tip de serviciu</FormLabel>
+                <FormGroup>
+                  <FormControlLabel control={<Checkbox />} label="Life Coaching" color='calendar'/>
+                  <FormControlLabel control={<Checkbox />} label="Mindset Coaching" color='calendar'/>
+                  <FormControlLabel control={<Checkbox />} label="Leadership" color='calendar'/>
+                </FormGroup>
+              </FormControl>
+            </div>
+
+            {/* Consultation Type */}
+            <div style={{ flex: '1 1 calc(25% - 16px)', color: 'calendar'}}>
+              <FormControl component="fieldset" >
+                <FormLabel component="legend" color='calendar'>Mod de desfășurare</FormLabel>
+                <RadioGroup color='calendar'>
+                  <FormControlLabel value="online" control={<Radio />} label="Online" color='calendar'/>
+                  <FormControlLabel value="fizic" control={<Radio />} label="Fizic" color='calendar'/>
+                </RadioGroup>
+              </FormControl>
+            </div>
+
+            {/* Client Type */}
+            <div style={{ flex: '1 1 calc(25% - 16px)' }}>
+              <FormControl component="fieldset" >
+                <FormLabel component="legend">Tip de client</FormLabel>
+                <RadioGroup >
+                  <FormControlLabel value="pf" control={<Radio />} label="Persoană fizică" color='calendar'/>
+                  <FormControlLabel value="companie" control={<Radio />} label="Companie" color='calendar' />
+                </RadioGroup>
+              </FormControl>
+            </div>
+
+            
+          </div>
+
+          {/* Submit Button */}
+          <Button variant="contained" color="calendar" type="submit" fullWidth>
+            Submit
+          </Button>
+        </div>
+      </form>
+    </div>
       </div>
     </LocalizationProvider>
   );

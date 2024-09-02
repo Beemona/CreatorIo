@@ -1,18 +1,33 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Link } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/system';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 // Define a styled span for the special word
-const HighlightedText = styled('span')({
-  color: '#F663F1',
+const HighlightedTextOrange = styled('span')({
+  color: '#FF6A0D',
 });
 
-const HighlightedTypography = ({ text, highlights }) => {
+const HighlightedTextPink = styled('span')({
+  color: '#C95F5F', // Orange highlight color
+});
+
+const HighlightedTextBrown = styled('span')({
+  color: '#B7472A', // Brown highlight color
+});
+
+const HighlightedTypography = ({ text, highlights, highlightColor = 'orange' }) => {
   const regex = new RegExp(`(${highlights.join('|')})`, 'gi');
   const parts = text.split(regex);
+  const HighlightedText = highlightColor === 'pink' ? HighlightedTextPink : HighlightedTextOrange;
+
 
   return (
     <Typography
@@ -61,7 +76,7 @@ const SectionContainer = ({ title, highlights, text }) => {
           fontFamily: 'Poppins',
           fontWeight: 500,
           fontSize: '2vh',
-          color: '#B7759E',
+          color: '#3C3E42',
           textDecoration: 'none',
           ml: 10,
           mr: 10,
@@ -73,9 +88,9 @@ const SectionContainer = ({ title, highlights, text }) => {
 };
 
 const ScheduleButton = styled(Button)({
-  color: '#F663F1',
+  color: '#3C3E42',
   fontFamily: 'Poppins',
-  borderColor: '#F663F1',
+  borderColor: '#3C3E42',
   textTransform: 'none',
   borderWidth: '0.3vh',
   borderRadius: '1.4vh', // Add rounded corners
@@ -90,8 +105,57 @@ const ScheduleButton = styled(Button)({
   },
 });
 
+const LightButton = styled(Button)({
+  color: '#B7472A',
+  backgroundColor: "#FFF2E5",
+  fontFamily: 'Poppins',
+  textTransform: 'none',
+  width: '28.2vh',
+  height: '8.3vh',
+  fontSize: '2.4vh',
+  fontWeight: '600',
+  borderRadius: '0',
+  justifyContent: 'center',
+  '&:hover': {
+    color: '#FFF2E5',
+    backgroundColor: "#FF6A0D",
+    borderWidth: '0.3vh',
+  },
+});
 
-function FirstPage() {
+const DarkButton = styled(Button)({
+  color: '#B7472A',
+  backgroundColor: "#FFD5AB",
+  fontFamily: 'Poppins',
+  textTransform: 'none',
+  width: '28.2vh',
+  height: '8.3vh',
+  fontSize: '2.4vh',
+  fontWeight: '600',
+  borderRadius: '0',
+  justifyContent: 'center',
+  '&:hover': {
+    color: '#FFF2E5',
+    backgroundColor: "#C95F5F",
+    borderWidth: '0.3vh',
+  },
+});
+
+const FirstPage = () => {
+  const navigate = useNavigate();
+
+  const reconectareRedirect = () => {
+    navigate('/reconectare');
+  };
+
+  const consultantaRedirect = () => {
+    navigate('/consultanta');
+  };
+
+  const bookingRedirect = () => {
+    navigate('/calendar')
+  }
+
   return (
     <div className="App">
       <Box
@@ -209,32 +273,33 @@ function FirstPage() {
             </Container>
           </Container>
         </Box>
-      </Box>  <Box sx={{ bgcolor: '#FFD5AB', width: '100%', height: '6.4vh' }} />
+      </Box>  
+      <Box sx={{ bgcolor: '#FFD5AB', width: '100%', height: '6.4vh' }} />
  
               <SectionContainer
          title="Descoperă-ți scopul și împlinirea"
-         highlights={['scopul', 'împlinirea']}
+         highlights={['']}
         text="Înțelegerea scopului tău este primul pas către o viață împlinită. Acordă-ți timp pentru a reflecta asupra a ceea ce contează cu<br/>  adevărat pentru tine,identifică-ți pasiunile și aliniază-ți acțiunile cu valorile tale fundamentale."
       />
               <SectionContainer
          title="Încărcă-te cu bunătate față de tine"
-         highlights={['bunătate']}
+         highlights={['']}
         text="Îmbrățișează-ți personalitatea și stilul unic. Celebrează ceea ce te face diferit și exprimă-te autentic. Încrederea vine din a fi fidel <br/>propriei persoane, nu din a te conforma așteptărilor altora."
       />
 
 <SectionContainer
          title="Reclamă-ți energia"
-         highlights={['energia']}
+         highlights={['']}
         text="Protejează-ți energia stabilind limite sănătoase și prioritizând activitățile care te revigorează. Implică-te în practici care îți refac <br/> spiritul, cum ar fi meditația, exercițiile fizice sau hobby-urile.             "
       />
 <SectionContainer
           title="Restabilește echilibrul și pacea"
-          highlights={['echilibrul', 'pacea']}
+          highlights={['']}
         text="Tinde spre o viață echilibrată gestionându-ți eficient timpul și asigurându-te că ai un echilibru sănătos între muncă și viața <br/> personală. Fă-ți timp pentru relaxare, relații și auto-îngrijire pentru a menține pacea interioară.     "
       />
               <SectionContainer
           title="Construiește încrederea de neclintit"
-          highlights={['încrederea']}
+          highlights={['']}
           text="Dezvoltă încrederea stabilindu-ți și atingând obiective mici, ieșind din zona ta de confort și învățând din experiențele tale. Ai <br/>încredere în abilitățile tale și crede în potențialul tău de a depăși provocările.</Typography>"
           />
               <Container
@@ -249,9 +314,9 @@ function FirstPage() {
               }}>
                 <HighlightedTypography
                 text="~ Descoperă-te prin Life Coaching ~"
-                highlights={['Life Coaching ~']}
+                highlights={['']}
     />
-     <ScheduleButton variant="outlined">Hai să ne cunoaștem!</ScheduleButton>
+     <ScheduleButton variant="outlined" onClick={bookingRedirect}>Hai să ne cunoaștem!</ScheduleButton>
               </Container>
 
               <Box 
@@ -265,8 +330,8 @@ function FirstPage() {
                 bgcolor: '#FFD5AB',
                 width: '100%',
                 height: '75vh',
-                mt: 16,
-                mb: 16,  
+                mt: 12,
+                mb: 12,  
                 }}>
                 <Typography
                  variant="h6"
@@ -278,7 +343,7 @@ function FirstPage() {
                    fontWeight: 400,
                    fontSize: '4.8vh',
                    letterSpacing: '0.20em',
-                   color: '#DB8530',
+                   color: '#C95F5F',
                    textDecoration: 'none',
                    ml: 10,
                    mr: 10,
@@ -295,7 +360,7 @@ function FirstPage() {
                    fontFamily: 'Poppins',
                    fontWeight: 400,
                    fontSize: '2.4vh',
-                   color: '#B7472A',
+                   color: '#3C3E42',
                    textDecoration: 'none',
                    ml: 10,
                    mr: 10,
@@ -312,7 +377,7 @@ function FirstPage() {
                    fontFamily: 'Poppins',
                    fontWeight: 400,
                    fontSize: '2.4vh',
-                   color: '#B7472A',
+                   color: '#3C3E42',
                    textDecoration: 'none',
                    ml: 10,
                    mr: 10,
@@ -322,11 +387,11 @@ function FirstPage() {
                 </Typography>
                 <ScheduleButton 
                 sx={{
-                  color: '#B7472A',
-                  borderColor: '#B7472A',
+                  color: '#3C3E42',
+                  borderColor: '#3C3E42',
                   '&:hover': {
-                    color: '#DB8530',
-                    borderColor: '#DB8530'},
+                    color: '#C95F5F',
+                    borderColor: '#C95F5F'},
                 }} 
                 variant="outlined">Dezvoltă-te cu mine!</ScheduleButton>
               </Box>
@@ -336,7 +401,6 @@ function FirstPage() {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-
         alignItems: 'center', // Align to the left
         textAlign: 'center', // Align text to the left
 
@@ -350,7 +414,7 @@ function FirstPage() {
                   fontFamily: 'Poppins',
                   fontWeight: 600,
                   fontSize: '3.6vh',
-                  color: '#B7759E',
+                  color: '#3C3E42',
                   textDecoration: 'none',
                   ml: 10,
                   mr: 10
@@ -367,7 +431,7 @@ Vrei să devii un lider mai bun?
                   fontFamily: 'Poppins',
                   fontWeight: 600,
                   fontSize: '4.8vh',
-                  color: '#B7472A',
+                  color: '#FF6A0D',
                   textDecoration: 'none',
                   ml: 10,
                   mr: 10,
@@ -397,7 +461,8 @@ Vrei să devii un lider mai bun?
       }}>
               <HighlightedTypography
       text="Autocunoaștere"
-      highlights={['']}
+      highlights={['Autocunoaștere']}
+      highlightColor='orange'
     />
      <Typography
                 variant="h6"
@@ -408,7 +473,7 @@ Vrei să devii un lider mai bun?
                   fontFamily: 'Poppins',
                   fontWeight: 500,
                   fontSize: '2vh',
-                  color: '#B7759E',
+                  color: '#3C3E42',
                   textDecoration: 'none',
                   ml: 10,
                   mr: 10
@@ -420,34 +485,214 @@ Vrei să devii un lider mai bun?
 
                <SectionContainer
           title="Setarea și atingerea obiectivelor"
-          highlights={['']}
+          highlights={['Setarea și atingerea obiectivelor']}
+          highlightColor='orange'
           text="Sprijină liderii în stabilirea unor obiective clare și realiste și în dezvoltarea unor planuri de acțiune pentru a le atinge."
           />
                <SectionContainer
           title="Dezvoltarea competențelor"
-          highlights={['']}
+          highlights={['Dezvoltarea competențelor']}
+          highlightColor='orange'
           text="Se concentrează pe îmbunătățirea abilităților de comunicare, delegare, gestionare a conflictelor și luare a deciziilor."
           />
                <SectionContainer
           title="Feedback și reflecție"
-          highlights={['']}
+          highlights={['Feedback și reflecție']}
+          highlightColor='orange'
           text="  Oferă un spațiu sigur pentru a primi feedback constructiv și pentru a reflecta asupra comportamentului și deciziilor anterioare.   "
           />
                <SectionContainer
           title="Sprijin și responsabilitate"
-          highlights={['']}
+          highlights={['Sprijin și responsabilitate']}
+          highlightColor='orange'
           text="Furnizează suport continuu și responsabilizare, ajutând liderii să rămână concentrați și motivați."
           />
           <ScheduleButton 
                 sx={{
-                  mt: 10,
-                  color: '#B7759E',
-                  borderColor: '#B7759E',
+                  mt: 9,
+                  mb: 12,
+                  color: '#3C3E42',
+                  borderColor: '#3C3E42',
                   '&:hover': {
-                    color: '#F663F1',
-                    borderColor: '#F663F1'},
+                    color: '#FF6A0D',
+                    borderColor: '#FF6A0D'},
                 }} 
                 variant="outlined">Progreamează o ședintă</ScheduleButton>
+                
+                <Box 
+  sx={{ 
+    bgcolor: '#FFD5AB', 
+    maxWidth: '100%', 
+    height: '17.5vh',  
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', // Center items vertically
+    pr: 9, 
+    pl: 9 
+  }}
+>
+  {/* Left side: Texts */}
+  <Box 
+    sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', // Center the text box vertically within this box
+      justifyContent: 'center', // Center items vertically within this box
+      height: '100%' // Ensure the text box takes full height of the parent box
+    }}
+  >
+     <Box 
+      sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'flex-start' // Align text to the left within this box
+      }}
+    >
+    <Typography
+      variant="h6"
+      noWrap
+      component="a"
+      sx={{
+        mb: 0,
+        mt: 3,
+        fontFamily: 'Poppins',
+        fontWeight: 600,
+        fontSize: '2.4vh',
+        color: '#EB9788',
+        textDecoration: 'none',
+      }}
+    >
+      Nu ai găsit ce căutai?
+    </Typography>
+    <HighlightedTypography
+      variant="body1"
+      noWrap
+      component="a"
+      sx={{
+        fontFamily: 'Poppins',
+        fontWeight: 400,
+        fontSize: '3.2vh',
+        letterSpacing: '0.10em',
+        color: '#DB8530',
+        textDecoration: 'none',
+      }}
+      text="Descoperă întreaga gamă de servicii TU CREATOR:"
+      highlights={['TU CREATOR:']}
+      highlightColor="brown"
+    />  
+</Box>
+  </Box>
+
+  {/* Right side: Buttons */}
+  <Box 
+    sx={{ 
+      display: 'flex', 
+      gap: 8, 
+      alignItems: 'center' // Center buttons vertically within this box
+    }}
+  >
+    <LightButton 
+      variant="contained" 
+      color="primary" 
+      sx={{ display: 'none' }}
+    >
+      Button 1
+    </LightButton>
+    <LightButton variant="contained" color="primary" onClick={consultantaRedirect}>Consultanță</LightButton>
+    <LightButton variant="contained" color="primary" onClick={reconectareRedirect}>Reconectare</LightButton>
+  </Box>
+</Box>
+<Box 
+  sx={{ 
+    bgcolor: '#FFF2E5', 
+    maxWidth: '100%', 
+    height: '17.5vh',  
+    display: 'flex', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', // Center items vertically
+    pr: 9, 
+    pl: 9 
+  }}
+>
+  {/* Left side: Texts */}
+  <Box 
+    sx={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      alignItems: 'center', // Center the text box vertically within this box
+      justifyContent: 'center', // Center items vertically within this box
+      height: '100%' // Ensure the text box takes full height of the parent box
+    }}
+  >
+     <Box 
+      sx={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'flex-start' // Align text to the left within this box
+      }}
+    >
+    <Typography
+      variant="h6"
+      noWrap
+      component="a"
+      sx={{
+        mb: 0,
+        mt: 3,
+        fontFamily: 'Poppins',
+        fontWeight: 600,
+        fontSize: '2.4vh',
+        color: '#EB9788',
+        textDecoration: 'none',
+      }}
+    >
+      De asemenea,
+    </Typography>
+    <HighlightedTypography
+      variant="body1"
+      noWrap
+      component="a"
+      sx={{
+        fontFamily: 'Poppins',
+        fontWeight: 400,
+        fontSize: '3.2vh',
+        letterSpacing: '0.10em',
+        color: '#DB8530',
+        textDecoration: 'none',
+      }}
+      text="Nu uita să explorezi universul EU CREATOR:"
+      highlights={['EU CREATOR:']}
+      highlightColor="pink"
+    />  
+</Box>
+  </Box>
+
+  {/* Right side: Buttons */}
+  <Box 
+    sx={{ 
+      display: 'flex', 
+      gap: 8, 
+      alignItems: 'center' // Center buttons vertically within this box
+    }}
+  >
+    <DarkButton variant="contained" color="primary" >Joaca vieții</DarkButton>
+    <DarkButton variant="contained" color="primary">Ateliere</DarkButton>
+    <DarkButton variant="contained" color="primary">De-ale gurii</DarkButton>
+  </Box>
+</Box>
+<Box  
+  sx={{ 
+        display: 'flex', 
+        flexDirection: 'row', 
+        alignItems: 'center' ,
+        justifyContent: 'center',
+        backgroundColor: '#FFD5AB',
+        height: '22vh',
+      }}
+    >
+      <WhatsAppIcon href='#' sx={{ fontSize: '5.7vh',  mt:10,}}></WhatsAppIcon>
+      <LinkedInIcon href='#' sx={{ fontSize: '5.7vh', mt:10,}}></LinkedInIcon>
+      <InstagramIcon href='#' sx={{ fontSize: '5.7vh', mt:10,}}></InstagramIcon>
+    </Box>
               </div>
               
   );

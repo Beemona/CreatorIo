@@ -9,6 +9,9 @@ const theme = createTheme({
     secondary: {
       main: '#B7472A', 
     },
+    calendar: {
+      main: '#FF6A0D'
+    }
   },
 });
 

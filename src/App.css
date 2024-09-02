@@ -3,6 +3,19 @@
   color: #B7472A;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none; 
+}
+
+html {
+  scrollbar-width: none;  
+}
+
+
 .App {
   text-align: center;
 }
